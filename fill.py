@@ -37,7 +37,7 @@ Q_walls = (T_air - T_bulk_n2o) / R_walls
 T_bulk_eqlm = T_air - Q_internal * R_walls
 
 dT_dt = (Q_internal - Q_walls) / (m_desired_n2o * cp_n2o_l)    # Q = m cp dT/dt, 
-t_to_chill = (T_bulk_n2o - m_desired_n2o) / dT_dt
+t_to_chill = (T_bulk_n2o - T_desired_n2o) / dT_dt
 
 # Results
 print(f"""
