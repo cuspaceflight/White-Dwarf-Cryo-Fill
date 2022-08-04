@@ -9,7 +9,7 @@ t = 14e-3                   # m
 
 # Tank properties
 k_tank = 236                # W/m/K
-reflectivity_tank = 0.86    # http://rmico.com/bare-aluminum#:~:text=Metal%20Mirror%20%C2%BB%20Bare%20Aluminum,slight%20scattering%20throughout%20the%20spectrum.
+#reflectivity_tank = 0.86    # http://rmico.com/bare-aluminum#:~:text=Metal%20Mirror%20%C2%BB%20Bare%20Aluminum,slight%20scattering%20throughout%20the%20spectrum.
 
 # Ambient temperatures
 T_air = 273.15 + 30         # K
