@@ -73,14 +73,15 @@ m_desired_n2o = 5           # Desired mass of N2O in filled tank, kg
 T_desired_n2o = 273.15 - 10 # Desired nitrous temperature
 
 cp_n2o_l = PropsSI('CPMASS','P', p_run,'Q', 0, 'NITROUSOXIDE')   
-dT_dt = (Q_vent) / (m_desired_n2o * cp_n2o_l)     # Q = m cp dT/dt, 
-t_to_chill = (T_run - T_desired_n2o) / dT_dt               # Time to chill nitrous only (ignoring tank thermal mass)
+dT_dt = (Q_vent) / (m_desired_n2o * cp_n2o_l)       # Q = m cp dT/dt, 
+t_to_chill = (T_supply - T_desired_n2o) / dT_dt     # Time to chill nitrous only (ignoring tank thermal mass)
 
 # Results
 print(f"""
-Boil-off rate = {mdot_vent*1000} g/s
-Heat loss by vent = {Q_vent} W
-Run pressure = {p_run/1e5} bar
-dT/dt = {dT_dt} K/s
-Time to chill = {t_to_chill/60} min
+Boil-off rate = {mdot_vent*1000:.03} g/s
+Heat loss by vent = {Q_vent/1e3:.03} kW
+Run pressure = {p_run/1e5:.04} bar
+Supply pressure = {p_supply/1e5:.04} bar
+dT/dt = {dT_dt:.03} K/s
+Time to chill = {t_to_chill/60:.03} min
 """)
