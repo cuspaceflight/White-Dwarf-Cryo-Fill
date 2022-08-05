@@ -37,7 +37,7 @@ def get_mdots(p_run):
         h2 = PropsSI('HMASS','S', s1,'P', p2, 'NITROUSOXIDE')  
         mdot_hem = Cd * A * rho_2 * np.sqrt(2 * (h1 - h2))
         mdot_spi = Cd * A * np.sqrt(2 * rho_1 * (p_supply - p2))
-        return A * (k / (1 + k) *  mdot_spi + 1 / (1 + k) * mdot_hem)
+        return (k / (1 + k) *  mdot_spi + 1 / (1 + k) * mdot_hem)
 
     mdot_crit = max(mdot_dyer(np.linspace(0, p_supply, 100)))
     mdot_fill = min(mdot_dyer(p_run), mdot_crit)
@@ -63,24 +63,24 @@ Q_vent = mdot_vent * dh_boiloff
 
 # Order of magnitude estimate for heat transfer through walls
 T_run = PropsSI('T','P', p_run,'Q', 0, 'NITROUSOXIDE')   
-r_i = r_o - t
-R_walls = np.log(r_o / r_i) / (2 * np.pi * k_tank * L)          # Thermal resistance for radial conduction
-Q_walls = (T_air - T_run) / R_walls
-T_bulk_eqlm = T_air - Q_vent * R_walls
+#r_i = r_o - t
+#R_walls = np.log(r_o / r_i) / (2 * np.pi * k_tank * L)          # Thermal resistance for radial conduction
+#Q_walls = (T_air - T_run) / R_walls
+#T_bulk_eqlm = T_air - Q_vent * R_walls
 
 # Time to chill
 m_desired_n2o = 5           # Desired mass of N2O in filled tank, kg
 T_desired_n2o = 273.15 - 10 # Desired nitrous temperature
 
 cp_n2o_l = PropsSI('CPMASS','P', p_run,'Q', 0, 'NITROUSOXIDE')   
-dT_dt = (Q_vent - Q_walls) / (m_desired_n2o * cp_n2o_l)     # Q = m cp dT/dt, 
+dT_dt = (Q_vent) / (m_desired_n2o * cp_n2o_l)     # Q = m cp dT/dt, 
 t_to_chill = (T_run - T_desired_n2o) / dT_dt               # Time to chill nitrous only (ignoring tank thermal mass)
+print(T_run)
 
 # Results
 print(f"""
 Boil-off rate = {mdot_vent} kg/s
 Heat loss by vent = {Q_vent} W
-Heat in by conduction = {Q_walls} W
 Run pressure = {p_run/1e5} bar
 dT/dt = {dT_dt} K/s
 Time to chill = {t_to_chill} s
